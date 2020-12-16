@@ -48,9 +48,7 @@ RUN curl -L -o /tmp/instantclient-sdk-12.2.zip http://bit.ly/2Bab3NM \
     && ldconfig
 #  2) OCI8
 RUN echo 'instantclient,/opt/oracle/instantclient/lib' | pecl install oci8-2.0.12
-ADD ./config/oci8.ini /usr/local/etc/php/conf.d/20-oci8.ini
-ADD ./config/oci8-test.php /tmp/oci8-test.php
-RUN php /tmp/oci8-test.php
+RUN echo 'extension=oci8.so' > /usr/local/etc/php/conf.d/20-oci8.ini
 #  2) PDO_OCI
 RUN pecl channel-update pear.php.net \
     && cd /tmp \
@@ -62,9 +60,7 @@ RUN pecl channel-update pear.php.net \
     && phpize \
     && ./configure --with-pdo-oci=/opt/oracle/instantclient \
     && make install
-ADD ./config/pdo_oci.ini /usr/local/etc/php/conf.d/20-pdo_oci.ini
-ADD ./config/pdo_oci-test.php /tmp/pdo_oci-test.php
-RUN php /tmp/pdo_oci-test.php
+RUN echo 'extension=pdo_oci.so' > /usr/local/etc/php/conf.d/20-pdo_oci.ini
 
 # Enable apache modules
 RUN a2enmod rewrite headers
