@@ -61,6 +61,7 @@ RUN pecl channel-update pear.php.net \
     && ./configure --with-pdo-oci=/opt/oracle/instantclient \
     && make install
 RUN echo 'extension=pdo_oci.so' > /usr/local/etc/php/conf.d/20-pdo_oci.ini
+RUN RUN rm -rf /tmp
 
 # Enable apache modules
 RUN a2enmod rewrite headers
